@@ -9,7 +9,7 @@
   </view>
 
   <view class="userinfo">
-    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 发送webSocket消息 </button>
+    <button open-type="getUserInfo" bindgetuserinfo="testProtoBuf"> 发送webSocket消息 </button>
 
   </view>
   <view class="saaa">

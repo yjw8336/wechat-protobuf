@@ -1,7 +1,9 @@
 //index.js
 //获取应用实例
 // import goog from 'google-protobuf';
-var hwFactory = require('../../proto/helloworld').lm.helloworld;
+var protoFactory = require('../../proto/test').jspb.test.Simple1;
+console.log(protoFactory)
+debugger
 const app = getApp()
 
 var ws;
@@ -51,7 +53,7 @@ Page({
   },
   initWs() {
     ws = wx.connectSocket({
-      url: 'ws://192.168.2.191:8095/webSocket',
+      url: 'ws://127.0.0.1:8095/webSocket',
       header: {
         'test': 'aaa'
       }
@@ -63,7 +65,7 @@ Page({
     });
     ws.onMessage(function (response) {
       let uint8Array = new Uint8Array(response.data);
-      let instance2 = hwFactory.decode(uint8Array);
+      let instance2 = protoFactory.decode(uint8Array);
       console.log(instance2);
       console.log("收到服务器消息" + JSON.stringify(response) + "   " + response);
     });
@@ -83,29 +85,20 @@ Page({
     })
   },
   testProtoBuf: function (e) {
-    // setInterval(function () {
-    //   a++;
-    //   if (ws && ws.readyState === 1) {
-    //     ws.send({ data: '数据为' + a });
-    //   } else {
-    //     _self.initWs();
-    //     console.log(ws);
-    //   }
-    // }, 1000);
-
-    console.log(hwFactory);
+    console.log(protoFactory);
     var $int = 9999999;
     var step = 10;
     var Long = require("long");
     var base64 = require("@protobufjs/base64");
     var longVal = new Long(0x7FFFFFFF, 0x7FFFFFFF);
     console.log(longVal.toString());
-      let instance = hwFactory.create({ id: 1, opt: 2, str:"123123sadasdas", opt64:longVal });
-      let buffer = hwFactory.encode(instance).finish();
+      let instance = protoFactory.create();
+      let buffer = protoFactory.encode(instance).finish();
     console.log(instance);
     if (ws && ws.readyState === 1) {
       // ws.send({ data: '数据为' + buffer });
-      ws.send({data:buffer.buffer});
+      ws.send({data:buffer.buffer.slice()});
+      // ws.send({data:1});
     } else {
       _self.initWs();
       console.log(ws);
