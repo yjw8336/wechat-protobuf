@@ -3,7 +3,6 @@
 // import goog from 'google-protobuf';
 var protoFactory = require('../../proto/test').jspb.test.Simple1;
 console.log(protoFactory)
-debugger
 const app = getApp()
 
 var ws;
